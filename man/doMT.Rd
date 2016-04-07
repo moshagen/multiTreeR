@@ -47,6 +47,5 @@ mtres <- doMT('2HT.eqn', '2HT.mdt', restrictions=list("g = 0.5"))
 mtres$paramEstm
 summary(mtres)
 }
-
 }
 

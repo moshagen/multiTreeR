@@ -23,6 +23,7 @@
 #' mtres$paramEstm
 #' summary(mtres)
 #' }
+#' @export
 #'
 doMT  <- function(fEqn, data, catlabels = NULL,
                   restrictions = NULL, fOut = "",
@@ -166,6 +167,8 @@ doMT  <- function(fEqn, data, catlabels = NULL,
 
 #' summary writes summary given mt result object
 #' @param mtres the mt result object (\code{\link{doMT}})
+#' @export
+#'
 summary.multiTreeR <- function(mtres){
 
   plab <- colnames(mtres$paramEstm)
