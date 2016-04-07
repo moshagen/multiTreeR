@@ -9,3 +9,6 @@
 #' Moshagen, M. (2010). multiTree: A computer program for the analysis of multinomial processing tree models. Behavior Research Methods, 42, 42-54.
 #'
 "_PACKAGE"
+
+# library(devtools)
+# devtools::document()

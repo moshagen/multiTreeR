@@ -9,16 +9,18 @@
 #' @param numRep how many times parameter estimation should be repeated (to avoid local minima)
 #' @param maxIter maximum number of iterations
 #' @param convergence convergence criterion
-#' @CI size of confidence interval in %, e.g. 95 for 95%
+#' @param CI size of confidence interval in %, e.g. 95 for 95%
 #' @param bootstrap samples number of bootstrap samples; 0 = no bootstrap
 #' @param jacobian whether to compute the jacobian
 #' @param fia whether to compute the fisher information approximation of the minimum description length
 #' @return mt results object (list)
-#' @example
-#' initMultiTreeR('multiTreeR.jar')
+#' @examples
+#' \dontrun{
 #' mtres <- doMT('2HT.eqn', '2HT.mdt', restrictions=list("g = 0.5"))
 #' mtres$paramEstm
 #' summary(mtres)
+#' }
+#'
 doMT  <- function(fEqn, data, catlabels = NULL,
                   restrictions = NULL, fOut = "",
                   lambda = 0.0, numRep=3.0, maxIter = 10000.0, convergence = 1.0E-10, CI=95.0,
