@@ -1,0 +1,16 @@
+15
+SourceA	AA	D1*d1
+SourceA	AA	D1*(1-d1)*a
+SourceA	AB	D1*(1-d1)*(1-a)
+SourceA	AA	(1-D1)*b*g
+SourceA	AB	(1-D1)*b*(1-g)
+SourceA	AN	(1-D1)*(1-b)
+SourceB	BB	D2*d2
+SourceB	BA	D2*(1-d2)*a
+SourceB	BB	D2*(1-d2)*(1-a)
+SourceB	BA	(1-D2)*b*g
+SourceB	BB	(1-D2)*b*(1-g)
+SourceB	BN	(1-D2)*(1-b)
+NewItem	NA	b*g
+NewItem	NB	b*(1-g)
+NewItem	NN	(1-b)

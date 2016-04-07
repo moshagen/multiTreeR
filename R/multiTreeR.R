@@ -3,7 +3,6 @@
 #' initMultiTreeR: inits jre and adds multitree.jar
 #' @param fJar string pointing to location of multitree.jar
 initMultiTreeR <- function(fJar){
-  require(rJava)
   .jinit(fJar)
 }
 
