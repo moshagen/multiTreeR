@@ -1,6 +1,9 @@
 #' multiTreeR: R interface for performing analyses of MPT models using multiTree.
 #'
-#' For details, see \url{http://psycho3.uni-mannheim.de/multitree}
+#' TO fit an MPT model using multiTree in R use \code{\link{doMT}}
+#'
+#' multiTreeR calls java code, so the  Java Runtime Environment has to be installed, get it here: \url{http://www.java.com}
+#' For details on multiTree, see \url{http://psycho3.uni-mannheim.de/multitree}
 #'
 #' @docType package
 #' @name multiTreeR
@@ -12,3 +15,4 @@
 
 # library(devtools)
 # devtools::document()
+

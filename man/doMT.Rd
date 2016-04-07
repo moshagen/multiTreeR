@@ -2,44 +2,44 @@
 % Please edit documentation in R/multiTreeR.R
 \name{doMT}
 \alias{doMT}
-\title{doMT: estimate mpt model using multitree}
+\title{doMT: estimate mpt model using multiTree}
 \usage{
 doMT(fEqn, data, catlabels = NULL, restrictions = NULL, fOut = "",
   lambda = 0, numRep = 3, maxIter = 10000, convergence = 1e-10,
   CI = 95, bootstrapSamples = 0, jacobian = FALSE, fia = FALSE)
 }
 \arguments{
-\item{data}{either a string pointing to a mdt file or a N*M data matrix or a N*M data frame}
+\item{data}{either a string pointing to a mdt file or a N*M data matrix or a N*M data frame.}
 
-\item{catlabels}{A string vector of category labels (matching the heading of the data file), only required for data matrix}
+\item{catlabels}{A string vector of category labels (matching the heading of the data file), only required for data matrix.}
 
-\item{restrictions}{= either a string pointing to a restrictions file or a list containing restrictions e.g. list("a=b", "a=.5")}
+\item{restrictions}{= either a string pointing to a restrictions file or a list containing restrictions e.g. list("a=b", "a=.5").}
 
-\item{fOut}{filename where outputfile should be written}
+\item{fOut}{filename where outputfile should be written.}
 
-\item{lambda}{lambda value for PD^lamda used in minimization and fit assessment}
+\item{lambda}{lambda value for PD^lamda used in minimization and fit assessment.}
 
-\item{numRep}{how many times parameter estimation should be repeated (to avoid local minima)}
+\item{numRep}{how many times parameter estimation should be repeated (to avoid local minima).}
 
-\item{maxIter}{maximum number of iterations}
+\item{maxIter}{maximum number of iterations.}
 
-\item{convergence}{convergence criterion}
+\item{convergence}{convergence criterion.}
 
 \item{CI}{size of confidence interval in %, e.g. 95 for 95%}
 
-\item{jacobian}{whether to compute the jacobian}
+\item{jacobian}{whether to compute the jacobian.}
 
-\item{fia}{whether to compute the fisher information approximation of the minimum description length}
+\item{fia}{whether to compute the fisher information approximation of the minimum description length.}
 
-\item{feqn}{eqn file location}
+\item{feqn}{eqn file location.}
 
-\item{bootstrap}{samples number of bootstrap samples; 0 = no bootstrap}
+\item{bootstrap}{samples number of bootstrap samples. 0 = no bootstrap.}
 }
 \value{
 mt results object (list)
 }
 \description{
-doMT: estimate mpt model using multitree
+Estimate an MPT model using multiTree
 }
 \examples{
 \dontrun{

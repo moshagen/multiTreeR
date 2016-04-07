@@ -1,18 +1,21 @@
 
-#' doMT: estimate mpt model using multitree
-#' @param feqn eqn file location
-#' @param data either a string pointing to a mdt file or a N*M data matrix or a N*M data frame
-#' @param catlabels A string vector of category labels (matching the heading of the data file), only required for data matrix
-#' @param restrictions = either a string pointing to a restrictions file or a list containing restrictions e.g. list("a=b", "a=.5")
-#' @param fOut filename where outputfile should be written
-#' @param lambda lambda value for PD^lamda used in minimization and fit assessment
-#' @param numRep how many times parameter estimation should be repeated (to avoid local minima)
-#' @param maxIter maximum number of iterations
-#' @param convergence convergence criterion
+#' doMT: estimate mpt model using multiTree
+#'
+#' Estimate an MPT model using multiTree
+#'
+#' @param feqn eqn file location.
+#' @param data either a string pointing to a mdt file or a N*M data matrix or a N*M data frame.
+#' @param catlabels A string vector of category labels (matching the heading of the data file), only required for data matrix.
+#' @param restrictions = either a string pointing to a restrictions file or a list containing restrictions e.g. list("a=b", "a=.5").
+#' @param fOut filename where outputfile should be written.
+#' @param lambda lambda value for PD^lamda used in minimization and fit assessment.
+#' @param numRep how many times parameter estimation should be repeated (to avoid local minima).
+#' @param maxIter maximum number of iterations.
+#' @param convergence convergence criterion.
 #' @param CI size of confidence interval in %, e.g. 95 for 95%
-#' @param bootstrap samples number of bootstrap samples; 0 = no bootstrap
-#' @param jacobian whether to compute the jacobian
-#' @param fia whether to compute the fisher information approximation of the minimum description length
+#' @param bootstrap samples number of bootstrap samples. 0 = no bootstrap.
+#' @param jacobian whether to compute the jacobian.
+#' @param fia whether to compute the fisher information approximation of the minimum description length.
 #' @return mt results object (list)
 #' @examples
 #' \dontrun{
