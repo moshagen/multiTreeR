@@ -35,9 +35,9 @@ The Java Runtime Environment has to be installed on the target machine, get it h
 1. Define the path to an existing MPT model file in .eqn format: `eqn <- 'source.eqn'`
 2. Either provide a data frame or define the path to an mdt: `mdt <- 'source.mdt'`
 3. Either define the path to an restrictions file or provide a list set parameter-restrictions: `restr <- list('a=g','D1=D2')`
-4. To run the analysis, call `{r, eval=FALSE} res <- doMT(eqn, mdt, restrictions=restr)` 
-5. Inspect results by calling `{r, eval=FALSE} summary(res)` or by peeking in the results object `{r, eval=FALSE} res$paramEst`
+4. To run the analysis, call `res <- doMT(eqn, mdt, restrictions=restr)` 
+5. Inspect results by calling `summary(res)` or by peeking in the results object `res$paramEst`
 
 
 ### References
-* Moshagen, M. (2010). multiTree: A computer program for the analysis of multinomial processing tree models. Behavior Research Methods, 42, 42–54. http://doi.org/10.3758/BRM.42.1.42
+* Moshagen, M. (2010). multiTree: A computer program for the analysis of multinomial processing tree models. _Behavior Research Methods, 42,_ 42–54. http://doi.org/10.3758/BRM.42.1.42

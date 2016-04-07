@@ -1,4 +1,3 @@
-
 # define eqn and mdt file
 fEqn <- system.file("extdata", "source.eqn", package="multiTreeR")
 fMdt <- system.file("extdata", "source.mdt", package="multiTreeR")
