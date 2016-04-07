@@ -25,7 +25,7 @@ doMT(fEqn, data, catlabels = NULL, restrictions = NULL, fOut = "",
 
 \item{convergence}{convergence criterion.}
 
-\item{CI}{size of confidence interval in %, e.g. 95 for 95%}
+\item{CI}{size of confidence interval in \%, e.g. 95 for 95\%}
 
 \item{jacobian}{whether to compute the jacobian.}
 
