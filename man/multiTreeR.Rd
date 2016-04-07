@@ -9,7 +9,7 @@
 TO fit an MPT model using multiTree in R use \code{\link{doMT}}
 }
 \details{
-multiTreeR calls java code, so the  Java Runtime Environment has to be installed, get it here: \url{http://www.java.com}
+multiTreeR calls java code, so the  Java Runtime Environment has to be installed, get it here: \url{http://www.java.com}.
 For details on multiTree, see \url{http://psycho3.uni-mannheim.de/multitree}
 }
 \author{
