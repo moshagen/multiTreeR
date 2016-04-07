@@ -5,7 +5,6 @@
 #' @docType package
 #' @name multiTreeR
 #' @author  Morten Moshagen
-#' @import rJava
 #' @references
 #' Moshagen, M. (2010). multiTree: A computer program for the analysis of multinomial processing tree models. Behavior Research Methods, 42, 42-54.
 #'

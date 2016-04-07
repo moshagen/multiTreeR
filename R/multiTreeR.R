@@ -1,12 +1,4 @@
 
-
-#' initMultiTreeR: inits jre and adds multitree.jar
-#' @param fJar string pointing to location of multitree.jar
-initMultiTreeR <- function(fJar){
-  .jinit(fJar)
-}
-
-
 #' doMT: estimate mpt model using multitree
 #' @param feqn eqn file location
 #' @param data either a string pointing to a mdt file or a N*M data matrix or a N*M data frame
