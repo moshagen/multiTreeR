@@ -3,7 +3,7 @@
 #'
 #' Estimate an MPT model using multiTree
 #'
-#' @param feqn eqn file location.
+#' @param fEqn eqn file location.
 #' @param data either a string pointing to a mdt file or a N*M data matrix or a N*M data frame.
 #' @param catlabels A string vector of category labels (matching the heading of the data file), only required for data matrix.
 #' @param restrictions = either a string pointing to a restrictions file or a list containing restrictions e.g. list("a=b", "a=.5").
@@ -59,9 +59,10 @@ doMT  <- function(fEqn, data, catlabels = NULL,
       if(!is.null(colnames(data)) && is.null(catlabels)){
         catlabels <- colnames(data)
       }
-      if(is.data.frame(data)){
-        data <- as.matrix(data)
-      }
+      # must be R numeric (not R integer as returned by rbinom, rmultinom!)
+      data <- matrix(as.numeric(unlist(data)),
+                     nrow(data), ncol(data),
+                     dimnames = dimnames(data))
     }else{
       warning("data file must be a matrix or a dataframe")
       return();
