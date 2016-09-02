@@ -9,6 +9,8 @@ doMT(fEqn, data, catlabels = NULL, restrictions = NULL, fOut = "",
   CI = 95, bootstrapSamples = 0, jacobian = FALSE, fia = FALSE)
 }
 \arguments{
+\item{fEqn}{eqn file location.}
+
 \item{data}{either a string pointing to a mdt file or a N*M data matrix or a N*M data frame.}
 
 \item{catlabels}{A string vector of category labels (matching the heading of the data file), only required for data matrix.}
@@ -30,8 +32,6 @@ doMT(fEqn, data, catlabels = NULL, restrictions = NULL, fOut = "",
 \item{jacobian}{whether to compute the jacobian.}
 
 \item{fia}{whether to compute the fisher information approximation of the minimum description length.}
-
-\item{feqn}{eqn file location.}
 
 \item{bootstrap}{samples number of bootstrap samples. 0 = no bootstrap.}
 }
