@@ -44,7 +44,7 @@ Estimate an MPT model using multiTree
 \examples{
 \dontrun{
 mtres <- doMT('2HT.eqn', '2HT.mdt', restrictions=list("g = 0.5"))
-mtres$paramEstm
+mtres$paramEst
 summary(mtres)
 }
 }

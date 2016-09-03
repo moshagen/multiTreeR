@@ -20,7 +20,7 @@
 #' @examples
 #' \dontrun{
 #' mtres <- doMT('2HT.eqn', '2HT.mdt', restrictions=list("g = 0.5"))
-#' mtres$paramEstm
+#' mtres$paramEst
 #' summary(mtres)
 #' }
 #' @export
@@ -119,106 +119,66 @@ doMT  <- function(fEqn, data, catlabels = NULL,
   .jcall(mtR, "V", "runAna")
 
   # get results (call .jmethods(mtR) to see all public methods)
-  res.paramEst <- .jcall(mtR, "[[D", "getParamEst", simplify = T)
-  res.paramEstSE <- .jcall(mtR, "[[D", "getParamSE", simplify = T)
-  res.paramEstSE[res.paramEstSE == -1] <- NA # constant parameters
-  res.paramEstCI <- .jcall(mtR, "[[D", "getParamCI", simplify = T)
-  res.paramEstCI[is.na(res.paramEstSE)] <- NA # constant parameters
-  res.ll <- .jcall(mtR, "[D", "getLogLik", simplify = T)
-  res.fit <- .jcall(mtR, "[D", "getFitStatistic", simplify = T)
-  res.df <- .jcall(mtR, "[I", "getDf", simplify = T)
-  res.p <- .jcall(mtR, "[D", "getPasymptotic", simplify = T)
-  res.p[res.p == -1] <- NA  # zero df
-  res.aic <- .jcall(mtR, "[D", "getAIC", simplify = T)
-  res.bic <- .jcall(mtR, "[D", "getBIC", simplify = T)
-  res.aicDelta <- .jcall(mtR, "[D", "getAICdelta", simplify = T)
-  res.bicDelta <- .jcall(mtR, "[D", "getBICdelta", simplify = T)
-  res.fisherinf <- .jcall(mtR, "[[[D", "getFisherInfo", simplify = T)
-  res.paramLabels <- .jcall(mtR, "[S", "getParamLabels", simplify = T)
-  if(fia){
-    res.fia <- .jcall(mtR, "[D", "getFIA", simplify = T)
-    res.cfia <- .jcall(mtR, "[D", "getCfia", simplify = T)
-  }
-  if(jacobian){
-    res.jacobian <- .jcall(mtR, "[[[D", "getJacobian", simplify = T)
-  }
-
-
-  colnames(res.paramEst) <- colnames(res.paramEstSE) <- colnames(res.paramEstCI) <- res.paramLabels
-
-  res <- list(paramEstm=res.paramEst, paramSE=res.paramEstSE, paramCI=res.paramEstCI,
-              logLik = res.ll, fit=res.fit, df=res.df, p.value=res.p, AIC = res.aic,
-              AIC.delta = res.aicDelta, BIC = res.bic, BIC.delta = res.bicDelta,
-              fisherInformation = res.fisherinf, FIA = NULL, cFIA = NULL, jacobian = NULL)
+  paramEst <- .jcall(mtR, "[[D", "getParamEst", simplify = T)
+  paramLabels <- .jcall(mtR, "[S", "getParamLabels", simplify = T)
+  ll <- .jcall(mtR, "[D", "getLogLik", simplify = T)
+  fit <- .jcall(mtR, "[D", "getFitStatistic", simplify = T)
+  df <- .jcall(mtR, "[I", "getDf", simplify = T)
+  p <- .jcall(mtR, "[D", "getPasymptotic", simplify = T)
+  p[p == -1] <- NA  # zero df
+  aic <- .jcall(mtR, "[D", "getAIC", simplify = T)
+  bic <- .jcall(mtR, "[D", "getBIC", simplify = T)
+  aicDelta <- .jcall(mtR, "[D", "getAICdelta", simplify = T)
+  bicDelta <- .jcall(mtR, "[D", "getBICdelta", simplify = T)
 
   if(fia){
-    res$FIA <- res.fia
-    res$cFIA <- res.cfia
+    fia <- .jcall(mtR, "[D", "getFIA", simplify = T)
+    cfia <- .jcall(mtR, "[D", "getCfia", simplify = T)
+  }else{
+    fia <- cfia <- NULL
   }
 
-  if(jacobian){
-    colnames(res.jacobian) <- rownames(res.jacobian) <- res.paramLabels
-    res$jacobian <- jacobian
+  res <- list(paramEst=paramEst,
+              paramSE=matrix(NA, nrow(paramEst), ncol(paramEst)),
+              paramCI=matrix(NA, nrow(paramEst), ncol(paramEst)),
+              logLik = ll, fit=fit, df=df, p.value=p, AIC = aic,
+              AIC.delta = aicDelta, BIC = bic, BIC.delta = bicDelta,
+              fisherInformation = NULL,
+              FIA = fia, cFIA = cfia,
+              jacobian = NULL)
+  colnames(res$paramEst) <- colnames(res$paramSE) <- colnames(res$paramCI) <- paramLabels
+
+
+  # SE/CI etc. might fail:
+  try({
+
+    res$fisherinf <- .jcall(mtR, "[[[D", "getFisherInfo", simplify = T)
+
+    ############# SE error #####################
+    # Error in validObject(.Object) :
+    #   invalid class “jobjRef” object: invalid object for slot
+    # "jobj" in class "jobjRef": got class "NULL", should be or extend class "externalptr"
+    res$paramSE <- .jcall(mtR, "[[D", "getParamSE", simplify = T)
+    res$paramSE[res$paramSE == -1] <- NA # constant parameters
+
+    res$paramCI <- .jcall(mtR, "[[D", "getParamCI", simplify = T)
+    res$paramCI[is.na(res$paramSE)] <- NA # constant parameters
+
+    if(jacobian){
+      res$jacobian <- .jcall(mtR, "[[[D", "getJacobian", simplify = T)
+      colnames(res$jacobian) <- rownames(res$jacobian) <- paramLabels
+    }
+  }, silent = TRUE)
+  if(all(is.na(res$paramSE))){
+    warning("Standard errors could not be estimated.")
   }
+
 
   class(res) <- "multiTreeR"
   return(res)
 }
 
 
-#' summary writes summary given mt result object
-#' @param mtres the mt result object (\code{\link{doMT}})
-#' @export
-#'
-summary.multiTreeR <- function(mtres){
-
-  plab <- colnames(mtres$paramEstm)
-
-  # calc CIs
-  ci.u <- mtres$paramEstm + mtres$paramCI
-  ci.l <- mtres$paramEstm - mtres$paramCI
-  colnames(ci.u) <- paste('CI upper (',plab,')', sep='')
-  colnames(ci.l) <- paste('CI lower (',plab,')', sep='')
-  ci <- cbind(ci.l, ci.u)
-  ci <- ci[, c(matrix(1:ncol(ci), nrow = 2, byrow = T))]
-
-  # prepare fitstring
-  fit <- cbind(mtres$fit, mtres$df, mtres$p.value, mtres$logLik, mtres$AIC, mtres$BIC, mtres$AIC.delta, mtres$BIC.delta)
-  fit <- fit[, c(matrix(1:ncol(fit), nrow = 8, byrow = T))]
-  colnames(fit) <- c('PD^lambda', 'df', 'p', 'logLik', 'AIC', 'BIC', 'delta AIC', 'delta BIC')
-
-  # prepare FIA string
-  if(!is.null(mtres$FIA)){
-    fia <- cbind(mtres$FIA, mtres$cFIA)
-    colnames(fia) <- c('FIA', 'cFIA')
-  }
-
-  # prep aggr param
-  pagg <-t(apply(res$paramEstm, 2, FUN=function(x){c(mean(x),sd(x),quantile(x, c(.025, .50, .975)))}))
-  colnames(pagg) <- c('Mean', 'SD', '2.5%', 'Median', '97.5%')
-
-  cat("\nModel Fit:\n\n")
-  print(round(fit, 5))
-
-  if(!is.null(mtres$FIA)){
-    cat("\n\nMinimum Description Length (Fisher Information Approximation):\n\n")
-    print(round(fia, 5))
-  }
-
-  cat("\n\nMean parameter estimates:\n\n")
-  print(round(pagg, 5))
-
-
-  cat("\n\nParameter estimates:\n\n")
-  print(round(mtres$paramEstm, 5))
-
-  cat("\n\nStandard errors:\n\n")
-  print(round(mtres$paramSE, 5))
-
-  cat("\n\nConfidence intervals:\n\n")
-  print(round(ci, 5))
-
-}
 
 
 
