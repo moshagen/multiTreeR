@@ -151,12 +151,19 @@ doMT  <- function(fEqn, data, catlabels = NULL,
 
   # SE/CI etc. might fail:
   try({
+
+    res$fisherinf <- .jcall(mtR, "[[[D", "getFisherInfo", simplify = T)
+
+    ############# SE error #####################
+    # Error in validObject(.Object) :
+    #   invalid class “jobjRef” object: invalid object for slot
+    # "jobj" in class "jobjRef": got class "NULL", should be or extend class "externalptr"
     res$paramSE <- .jcall(mtR, "[[D", "getParamSE", simplify = T)
     res$paramSE[res$paramSE == -1] <- NA # constant parameters
+
     res$paramCI <- .jcall(mtR, "[[D", "getParamCI", simplify = T)
     res$paramCI[is.na(res$paramSE)] <- NA # constant parameters
 
-    res$fisherinf <- .jcall(mtR, "[[[D", "getFisherInfo", simplify = T)
     if(jacobian){
       res$jacobian <- .jcall(mtR, "[[[D", "getJacobian", simplify = T)
       colnames(res$jacobian) <- rownames(res$jacobian) <- paramLabels

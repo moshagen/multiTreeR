@@ -2,5 +2,4 @@
 
 S3method(summary,multiTreeR)
 export(doMT)
-export(doMTloop)
 import(rJava)
